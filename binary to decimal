@@ -1,0 +1,18 @@
+// to convert binary to decimal with power function
+#include<stdio.h>
+#include<math.h>
+
+int main() {
+    int num;
+    printf("Enter the number; ");
+    scanf("%d", &num);
+    int temp = num, decNum=0, pos =0;
+    while(temp!=0){
+        int rem = temp % 10;
+        decNum = decNum + rem * pow(2, pos);
+        pos++;
+        temp  =temp / 10;
+    }
+    printf("decimal of %d is %d", num, decNum);
+    return 0;
+}
