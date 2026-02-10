@@ -1,0 +1,17 @@
+// to convert decimal to binary
+#include<stdio.h>
+int main() {
+ int num, bin=0;
+ printf("Enter the number: ");
+ scanf("%d", &num);
+ int temp = num;
+ int place = 1;
+ while(temp!=0){
+    int rem = temp % 2;
+        bin = bin + rem * place;
+        temp /= 2;
+        place*= 10;
+ } 
+ printf("binary of %d is %d", num, bin);
+ return 0;
+}
