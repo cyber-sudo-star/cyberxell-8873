@@ -1,0 +1,155 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define SIZE 10
+
+int s1[SIZE], s2[SIZE];
+int t1 = -1, t2 = -1;
+
+/* Push operation */
+void push(int stack_no, int item) {
+    if (stack_no == 1) {
+        if (t1 == SIZE - 1) {
+            printf("Stack 1 Overflow\n");
+        } else {
+            s1[++t1] = item;
+            printf("Inserted %d into Stack 1\n", item);
+        }
+    } 
+    else if (stack_no == 2) {
+        if (t2 == SIZE - 1) {
+            printf("Stack 2 Overflow\n");
+        } else {
+            s2[++t2] = item;
+            printf("Inserted %d into Stack 2\n", item);
+        }
+    } 
+    else {
+        printf("Invalid stack number\n");
+    }
+}
+
+/* Pop operation */
+int pop(int stack_no) {
+    if (stack_no == 1) {
+        if (t1 == -1) {
+            printf("Stack 1 Underflow\n");
+            return -1;
+        }
+        return s1[t1--];
+    } 
+    else if (stack_no == 2) {
+        if (t2 == -1) {
+            printf("Stack 2 Underflow\n");
+            return -1;
+        }
+        return s2[t2--];
+    }
+
+    printf("Invalid stack number\n");
+    return -1;
+}
+
+/* Peek operation */
+int topElement(int stack_no) {
+    if (stack_no == 1) {
+        if (t1 == -1) {
+            printf("Stack 1 Empty\n");
+            return -1;
+        }
+        return s1[t1];
+    } 
+    else if (stack_no == 2) {
+        if (t2 == -1) {
+            printf("Stack 2 Empty\n");
+            return -1;
+        }
+        return s2[t2];
+    }
+
+    printf("Invalid stack number\n");
+    return -1;
+}
+
+/* Display functions */
+void showStack1() {
+    if (t1 == -1) {
+        printf("Stack 1 is Empty\n");
+        return;
+    }
+
+    printf("Stack 1 Elements:\n");
+    for (int i = t1; i >= 0; i--) {
+        printf("%d\n", s1[i]);
+    }
+}
+
+void showStack2() {
+    if (t2 == -1) {
+        printf("Stack 2 is Empty\n");
+        return;
+    }
+
+    printf("Stack 2 Elements:\n");
+    for (int i = t2; i >= 0; i--) {
+        printf("%d\n", s2[i]);
+    }
+}
+
+int main() {
+    int option, stack_no, value, result;
+
+    while (1) {
+        printf("\nMENU\n");
+        printf("1. Push\n");
+        printf("2. Pop\n");
+        printf("3. Peek\n");
+        printf("4. Display Stack 1\n");
+        printf("5. Display Stack 2\n");
+        printf("6. Exit\n");
+        printf("Choose option: ");
+        scanf("%d", &option);
+
+        switch (option) {
+            case 1:
+                printf("Enter stack number (1 or 2): ");
+                scanf("%d", &stack_no);
+                printf("Enter value: ");
+                scanf("%d", &value);
+                push(stack_no, value);
+                break;
+
+            case 2:
+                printf("Enter stack number (1 or 2): ");
+                scanf("%d", &stack_no);
+                result = pop(stack_no);
+                if (result != -1)
+                    printf("Removed element: %d\n", result);
+                break;
+
+            case 3:
+                printf("Enter stack number (1 or 2): ");
+                scanf("%d", &stack_no);
+                result = topElement(stack_no);
+                if (result != -1)
+                    printf("Top element: %d\n", result);
+                break;
+
+            case 4:
+                showStack1();
+                break;
+
+            case 5:
+                showStack2();
+                break;
+
+            case 6:
+                exit(0);
+
+            default:
+                printf("Invalid option\n");
+        }
+    }
+
+    return 0;
+}
