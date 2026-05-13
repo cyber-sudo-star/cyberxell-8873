@@ -1,0 +1,77 @@
+```c id="7m2x91"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+#define MAX 1000
+
+long long stack[MAX];
+int top = -1;
+
+// Push into stack
+void push(long long x) {
+    stack[++top] = x;
+}
+
+// Pop from stack
+long long pop() {
+    return stack[top--];
+}
+
+int main() {
+    char str[1000];
+
+    // Read full postfix expression
+    fgets(str, sizeof(str), stdin);
+
+    // Split tokens by space
+    char *token = strtok(str, " \n");
+
+    while (token != NULL) {
+
+        // If token is a number
+        if ((token[0] >= '0' && token[0] <= '9')) {
+            push(atoll(token));
+        }
+
+        // Operator
+        else {
+            long long b = pop();
+            long long a = pop();
+            long long result;
+
+            switch (token[0]) {
+                case '+':
+                    result = a + b;
+                    break;
+
+                case '-':
+                    result = a - b;
+                    break;
+
+                case '*':
+                    result = a * b;
+                    break;
+
+                case '/':
+                    result = a / b;
+                    break;
+
+                case '^':
+                    result = (long long)pow(a, b);
+                    break;
+            }
+
+            push(result);
+        }
+
+        token = strtok(NULL, " \n");
+    }
+
+    // Final result
+    printf("%lld\n", pop());
+
+    return 0;
+}
+```
