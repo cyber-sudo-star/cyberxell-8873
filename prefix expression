@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+#define MAX 1000
+
+long long stack[MAX];
+int top = -1;
+
+// Push into stack
+void push(long long x) {
+    stack[++top] = x;
+}
+
+// Pop from stack
+long long pop() {
+    return stack[top--];
+}
+
+int main() {
+    char str[1000];
+
+    // Read full prefix expression
+    fgets(str, sizeof(str), stdin);
+
+    // Store tokens
+    char *tokens[MAX];
+    int count = 0;
+
+    char *token = strtok(str, " \n");
+
+    while (token != NULL) {
+        tokens[count++] = token;
+        token = strtok(NULL, " \n");
+    }
+
+    // Traverse from right to left
+    for (int i = count - 1; i >= 0; i--) {
+
+        // If operand
+        if (tokens[i][0] >= '0' && tokens[i][0] <= '9') {
+            push(atoll(tokens[i]));
+        }
+
+        // Operator
+        else {
+            long long a = pop();
+            long long b = pop();
+            long long result = 0;
+
+            switch (tokens[i][0]) {
+
+                case '+':
+                    result = a + b;
+                    break;
+
+                case '-':
+                    result = a - b;
+                    break;
+
+                case '*':
+                    result = a * b;
+                    break;
+
+                case '/':
+                    result = a / b;
+                    break;
+
+                case '^':
+                    result = (long long)pow(a, b);
+                    break;
+            }
+
+            push(result);
+        }
+    }
+
+    // Final answer
+    printf("%lld\n", pop());
+
+    return 0;
+}
