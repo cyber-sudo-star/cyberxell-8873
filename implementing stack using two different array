@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct {
+    long long *arr;
+    int top;
+    int capacity;
+} Stack;
+
+// Initialize stack
+void initStack(Stack *s, int size) {
+    s->capacity = size;
+    s->top = -1;
+    s->arr = (long long *)malloc(size * sizeof(long long));
+}
+
+// Push operation
+void push(Stack *s, long long x) {
+    if (s->top == s->capacity - 1) {
+        printf("Overflow\n");
+        return;
+    }
+
+    s->arr[++(s->top)] = x;
+}
+
+// Pop operation
+void pop(Stack *s) {
+    if (s->top == -1) {
+        printf("Underflow\n");
+        return;
+    }
+
+    printf("%lld\n", s->arr[(s->top)--]);
+}
+
+// Peek operation
+void peek(Stack *s) {
+    if (s->top == -1) {
+        printf("Underflow\n");
+        return;
+    }
+
+    printf("%lld\n", s->arr[s->top]);
+}
+
+// Display operation
+void display(Stack *s) {
+    if (s->top == -1) {
+        printf("Empty\n");
+        return;
+    }
+
+    for (int i = s->top; i >= 0; i--) {
+        printf("%lld", s->arr[i]);
+
+        if (i != 0)
+            printf(" ");
+    }
+
+    printf("\n");
+}
+
+int main() {
+    int N1, N2;
+    scanf("%d %d", &N1, &N2);
+
+    Stack s1, s2;
+
+    initStack(&s1, N1);
+    initStack(&s2, N2);
+
+    int Q;
+    scanf("%d", &Q);
+
+    while (Q--) {
+        char op[20];
+        scanf("%s", op);
+
+        if (strcmp(op, "PUSH") == 0) {
+            int S;
+            long long X;
+
+            scanf("%d %lld", &S, &X);
+
+            if (S == 1)
+                push(&s1, X);
+            else
+                push(&s2, X);
+
+        } else if (strcmp(op, "POP") == 0) {
+            int S;
+            scanf("%d", &S);
+
+            if (S == 1)
+                pop(&s1);
+            else
+                pop(&s2);
+
+        } else if (strcmp(op, "PEEK") == 0) {
+            int S;
+            scanf("%d", &S);
+
+            if (S == 1)
+                peek(&s1);
+            else
+                peek(&s2);
+
+        } else if (strcmp(op, "DISPLAY") == 0) {
+            int S;
+            scanf("%d", &S);
+
+            if (S == 1)
+                display(&s1);
+            else
+                display(&s2);
+        }
+    }
+
+    // Free allocated memory
+    free(s1.arr);
+    free(s2.arr);
+
+    return 0;
+}
